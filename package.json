@@ -1,0 +1,25 @@
+{
+  "name": "analytics-service",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bignumber.js": "^7.2.1",
+    "bluebird": "^3.5.1",
+    "body-parser": "^1.18.3",
+    "bunyan": "^1.8.12",
+    "dotenv": "^6.0.0",
+    "express": "^4.16.3",
+    "json2csv": "^4.2.1",
+    "lodash": "^4.17.10",
+    "mongoose": "^5.2.12",
+    "mongoose-long": "^0.2.1",
+    "require-all": "^3.0.0",
+    "web3": "^1.0.0-beta.35"
+  }
+}

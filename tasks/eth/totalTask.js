@@ -1,9 +1,9 @@
 const BigNumber = require('bignumber.js'),
   _ = require('lodash'),
-  allByAddressTask = require('./allByAddressTask');
+  totalByAddressTask = require('./totalByAddressTask');
 
 module.exports = async () => {
-  const users = await allByAddressTask();
+  const users = await totalByAddressTask();
 
   return _.chain(users).reduce((result, user)=>{
     return result.plus(user.balance);

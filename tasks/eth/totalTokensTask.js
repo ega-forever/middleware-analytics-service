@@ -1,10 +1,10 @@
 const _ = require('lodash'),
   BigNumber = require('bignumber.js'),
-  allTokensByAddressTask = require('./allTokensByAddressTask');
+  totalTokensByAddressTask = require('./totalTokensByAddressTask');
 
 module.exports = async () => {
 
-  const users = await allTokensByAddressTask();
+  const users = await totalTokensByAddressTask();
 
   return _.chain(users)
     .map(item=>item.tokens)

@@ -1,19 +1,16 @@
 const config = require('../../config'),
   models = require('../../models/eth'),
-  allTask = require('./AllTask'),
-  allByAddress = require('./AllByAddressTask'),
-  allTokensByAddressTask = require('./AllTokensByAddressTask'),
-  allTokensTask = require('./AllTokensTask'),
+  requireAll = require('require-all'),
+  taskMap = requireAll({
+    dirname: __dirname,
+    filter: /(.+Task)\.js$/,
+    map: task=>task.replace('Task', '').toLowerCase()
+  }),
   mongoose = require('mongoose');
 
-module.exports = async (taskId) => {
+module.exports = async (taskId, args) => {
 
-  const taskMap = {
-    all: allTask,
-    allbyaddress: allByAddress,
-    alltokensbyaddress: allTokensByAddressTask,
-    alltokens: allTokensTask
-  };
+  taskId = taskId.toLowerCase();
 
   if (!taskMap[taskId])
     return;
@@ -25,7 +22,7 @@ module.exports = async (taskId) => {
   models.initData(dataConnection, config.mongo.eth.data.collectionPrefix);
 
 
-  const reply = await taskMap[taskId]();
+  const reply = await taskMap[taskId](...args);
 
   accountsConnection.close();
   dataConnection.close();

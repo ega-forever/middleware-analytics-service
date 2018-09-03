@@ -1,15 +1,16 @@
 const config = require('../../config'),
   models = require('../../models/btc'),
-  allTask = require('./allTask'),
-  allByAddress = require('./allByAddressTask'),
+  requireAll = require('require-all'),
+  taskMap = requireAll({
+    dirname: __dirname,
+    filter: /(.+Task)\.js$/,
+    map: task=>task.replace('Task', '').toLowerCase()
+  }),
   mongoose = require('mongoose');
 
-module.exports = async (taskId) => {
+module.exports = async (taskId, args) => {
 
-  const taskMap = {
-    all: allTask,
-    allbyaddress: allByAddress
-  };
+  taskId = taskId.toLowerCase();
 
   if (!taskMap[taskId])
     return;
@@ -21,7 +22,7 @@ module.exports = async (taskId) => {
   models.initData(dataConnection, config.mongo.btc.data.collectionPrefix);
 
 
-  const reply = await taskMap[taskId]();
+  const reply = await taskMap[taskId](...args);
 
   accountsConnection.close();
   dataConnection.close();

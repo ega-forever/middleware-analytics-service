@@ -27,7 +27,7 @@ module.exports = async (start, end) => {
 
   let countUsers = await models.accountModel.count();
 
-  let users = await Promise.mapSeries(_.range(0, countUsers, LIMIT), async startAccount => {
+  let userSums = await Promise.mapSeries(_.range(0, countUsers, LIMIT), async startAccount => {
     const accounts = await models.accountModel.find({}).select('address').skip(startAccount).limit(LIMIT);
 
     const condition = [
@@ -82,5 +82,5 @@ module.exports = async (start, end) => {
 
   });
 
-  return _.flattenDeep(users);
+  return sumNumbers(userSums);
 };

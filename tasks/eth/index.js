@@ -8,7 +8,7 @@ const config = require('../../config'),
   }),
   mongoose = require('mongoose');
 
-module.exports = async (taskId, args) => {
+module.exports = async (taskId, args = []) => {
 
   taskId = taskId.toLowerCase();
 

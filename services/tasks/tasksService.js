@@ -11,9 +11,9 @@ const path = require('path'),
 
 module.exports = async (req, res) => {
 
-  let task = req.params.task;
+  let task = req.params.task.toLowerCase();
 
-  let blockchainInTask = _.chain(tasks).toPairs()
+  let blockchainInTask = _.chain(req.params.blockchain ? _.pick(tasks, req.params.blockchain) : tasks).toPairs()
     .map(pair => {
       return {
         blockchain: pair[0],
@@ -26,7 +26,7 @@ module.exports = async (req, res) => {
   blockchainInTask = await Promise.mapSeries(blockchainInTask, async item=>{
     return {
       blockchain: item.blockchain,
-      result: await item.task(task)
+      result: await item.task(task, req.query.args)
     };
   });
 
